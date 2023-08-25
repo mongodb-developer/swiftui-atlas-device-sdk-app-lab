@@ -1,0 +1,8 @@
+{
+  "label": "Create the iOS Project",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "In this section, you will create an empty iOS project in Xcode and add a few simple Views."
+  }
+}

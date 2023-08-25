@@ -1,0 +1,60 @@
+
+# Day Models
+
+## Create a new Model Classes "Day"
+
+A Day is the record of habits for that day. We'll add a helper function to create one Day adding all Habits already added to the Realm.
+
+```swift title='/Model/Day.swift'
+import Foundation
+import RealmSwift
+
+public class Day: Object, ObjectKeyIdentifiable {
+    @Persisted(primaryKey: true) var _id: ObjectId
+
+    @Persisted var date = Date()
+    @Persisted var habits = RealmSwift.List<Habit>()
+    
+    static func createDayWithHabitsInRealm(realm: Realm) -> Day {
+        let day = Day()
+        
+        let allHabits = realm.objects(Habits.self)
+        if let firstHabitCollection = allHabits.first {
+            let habits = firstHabitCollection.habits
+            
+            if !habits.isEmpty {
+                for habit in habits {
+                    day.habits.append(Habit.from(habit))
+                }
+            }
+        }
+
+        return day
+    }
+}
+```
+
+## Update Habit
+
+We're using here a static method `Habit.from` that we need to add to our `Habit` model:
+
+```swift title='/Model/Habit.swift'
+static func from(_ habit: Habit) -> Habit {
+    return Habit(name: habit.name, desc: habit.desc)
+}
+```
+
+## Create a new Model Class "Days"
+
+This will contain a list of all the days we've been tracking our habits.
+
+```swift title='/Model/Days.swift'
+import Foundation
+import RealmSwift
+
+class Days: Object, ObjectKeyIdentifiable {
+    @Persisted(primaryKey: true) var _id: ObjectId
+
+    @Persisted var days = RealmSwift.List<Day>()
+}
+```

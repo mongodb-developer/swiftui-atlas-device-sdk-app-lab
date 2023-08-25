@@ -1,0 +1,53 @@
+
+# Tracking Habits
+
+## Create a new TrackDailyHabitsView
+
+```swift title='/UI/TrackDailyHabitsView.swift'
+import SwiftUI
+import RealmSwift
+
+struct TrackDailyHabitsView: View {
+    @ObservedRealmObject var day: Day
+    
+    var body: some View {
+        List {
+            Section {
+                DatePicker(
+                        "Review Date",
+                        selection: $day.date,
+                        displayedComponents: [.date]
+                    )
+                .datePickerStyle(.compact)
+            }
+            Section {
+                ForEach($day.habits) { habit in
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(habit.name.wrappedValue)
+                            Text(habit.desc.wrappedValue)
+                        }
+                        Toggle("", isOn: habit.done)
+                    }
+                }
+            }
+        }
+        .scrollContentBackground(.hidden)
+        .navigationTitle("\(day.date.formatted(date: .numeric, time: .omitted))")
+    }
+}
+```
+
+## Adjust the Preview
+
+```swift title='/UI/TrackDailyHabitsView.swift'
+struct TrackDailyHabitsView_Previews: PreviewProvider {
+    static var previews: some View {
+        let day = Day.createDayWithHabitsInRealm(realm: realmWithData())
+        
+        NavigationStack {
+            TrackDailyHabitsView(day: day)
+        }
+    }
+}
+```

@@ -1,0 +1,31 @@
+# Realm Environment Variables
+
+## Environment .realm  
+
+Realm defines several [environment](https://developer.apple.com/documentation/swiftui/environment) variables in SwiftUI, we've already used one in this preview:
+
+To use this data we change the preview in `ConfigView.swift`. We can call `realmWithData` as it's a `static` member of `PreviewProvider` now.
+
+```swift title='ConfigView.swift'
+struct ConfigView_Previews: PreviewProvider {
+    static var previews: some View {
+        let realm =  realmWithData()
+        return ConfigView(habits: realm.objects(Habits.self).first!)
+            .environment(\.realm, realm)
+    }
+}
+```
+
+The default Realm is created by the Realm SDK and we can access it using the path `\.realm`, but we can inject a new realm to other views down our hierarchy using:
+
+```swift
+.environment(\.realm, realm)
+```
+
+## Environment .realmConfig
+
+We can also change the default Realm Config and inject it using the environment with:
+
+```swift
+.environment(\.realmConfig, realmConfig)
+```

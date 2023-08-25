@@ -1,0 +1,67 @@
+# Realm+Previews extension
+
+We're going to add to our previews some Realm-powered code. Create a `Realm+Previews.swift` file and add an extension of `PreviewProvider`. [`PreviewProvider`](https://developer.apple.com/documentation/swiftui/previewprovider) is a Protocol that all SwiftUI Previews implement. So if we extend that protocol, all our previews will have the extended code.
+
+## Realms in Memory
+
+In this extension we'll add a function that creates and return a Realm with an in memory store. This is great for testing, as changes are not persisted to disk. To create that Realm, we 1st create the realm configuration and then the Realm using that configuration.
+
+```swift title='/Util/Realm+Previews'
+import SwiftUI
+import RealmSwift
+
+extension PreviewProvider {
+    static func emptyRealmInMemory() -> Realm {
+        // configuration for an in-memory Realm
+        var conf = Realm.Configuration.defaultConfiguration
+        conf.inMemoryIdentifier = "preview"
+
+        // create and return a realm
+        let realm = try! Realm(configuration: conf)
+        return realm
+    }
+}
+```
+
+## Some data
+
+Now we'll add some data. We run a query to get all `Habits` in the Realm. If there's none, we insert 10 new `Habit` objects.
+
+To store data in a Realm we just create an Object, in this case a `Habit`, add it to the collection and then save the collection inside a `write` transaction. No need for DAOs or [ORMs](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping), we just instantiate our model objects and call `realm.add` inside a `realm.write` transaction.
+
+```swift title='/Util/Realm+Previews'
+    static func realmWithData(realm: Realm = emptyRealmInMemory()) -> Realm {
+        let existingHabits = realm.objects(Habit.self)
+        
+        // if there's no habits (which won't as we're using an empty realm by default) we add a few
+        if existingHabits.count == 0 {
+            let habits = Habits()
+            
+            for i in 0...9 {
+                habits.habits.append(Habit(name: "Habit \(i)", desc: "Description \(i)"))
+            }  
+            
+            try? realm.write({
+                realm.add(habits)
+            })
+        }
+        
+        return realm
+    }
+```
+
+## Using it in our previews
+
+To use this data we change the preview in `ConfigView.swift`. We can call `realmWithData` as it's a `static` member of `PreviewProvider` now.
+
+```swift title='/UI/ConfigView.swift'
+struct ConfigView_Previews: PreviewProvider {
+    static var previews: some View {
+        let realm =  realmWithData()
+        return ConfigView(habits: realm.objects(Habits.self).first!)
+            .environment(\.realm, realm)
+    }
+}
+```
+
+![](/img/6-realm-previews-extension/preview-some-data.png)

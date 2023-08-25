@@ -1,0 +1,11 @@
+# Using TrackDailyHabitsView in DaysView
+
+We can finally remove that `TO DO` text and use our new `TrackDailyHabitsView`
+
+```swift title='/UI/DaysView.swift'
+ForEach(days) { day in
+    NavigationLink(destination: TrackDailyHabitsView(day: day)) {
+        DayCellView(day: day)
+    }
+}
+```

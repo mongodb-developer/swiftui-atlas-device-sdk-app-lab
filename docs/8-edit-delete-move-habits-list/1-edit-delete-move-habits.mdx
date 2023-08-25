@@ -1,0 +1,29 @@
+# Edit, delete and move buttons
+
+## Edit button
+
+- we'll add an Edit Button to the `ConfigView`. This way the List will enter Edit mode to delete / move rows. When we move or delete a row, this will be reflected in Realm.
+
+```swift title='ConfigView.swift'
+    List {
+        /// same code
+    }
+    .navigationBarItems(trailing: EditButton())
+```
+
+## Move and delete buttons
+
+- we add to `ForEach` these two lines:
+
+```swift title='ConfigView.swift'
+.onDelete(perform: $habits.habits.remove)
+.onMove(perform: $habits.habits.move)
+```
+
+Now we can swipe the cell and get a working delete button that'll call `$habits.habits.remove`, removing this object from the Realm when we remove the row from the list.
+
+![](/img/8-edit-delete-move-habits-list/delete.png)
+
+We can also enter Edit mode and move cells around thanks to `$habits.habits.move`.
+
+![](/img/8-edit-delete-move-habits-list/move.png)

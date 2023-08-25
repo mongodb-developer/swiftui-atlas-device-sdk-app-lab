@@ -1,0 +1,81 @@
+---
+sidebar_position: 5
+---
+
+# Display a List of Habits!
+
+
+## Observing a list of all Habits 
+
+To display the list of habits we'll be creating in `ConfigView`, we'll start by adding to `ConfigView` all the `Habits` from the local DB
+
+```swift title='UI/ConfigView.swift'
+@ObservedRealmObject var habits: Habits
+```
+
+This works as a query, reading all objects of type `Habit` from our local DB. As this is `Observed`, any changes will be reflected automatically in the View.
+
+## Update Preview code
+
+We need to add the parameter `habits` when we instantiate a new `ConfigView` in the Preview.
+
+```swift title='UI/ConfigView.swift'
+struct ConfigView_Previews: PreviewProvider {
+    static var previews: some View {
+        ConfigView(habits: Habits())
+    }
+}
+```
+
+## Update `MainView`
+
+As we also use `ConfigView` in `MainView` we need to update the code
+
+```swift title='UI/MainView.swift'
+            ConfigView(habits: Habits())
+                .tabItem {
+                    Image(systemName: "wrench.and.screwdriver")
+                    Text("Config")
+                }
+```
+
+## Add a SwiftUI List to `ConfigView`
+
+We'll replace the contents of `ConfigView` and add a list that show's each `Habit`'s name.
+
+```swift title='UI/ConfigView.swift'
+struct ConfigView: View {    
+    var body: some View {
+        List {
+            ForEach(habits.habits) { habit in
+                Text("\(habit.name)")
+            }
+        }
+    }
+}
+```
+
+## Identifiable
+
+If we compile, we'll get this error:
+
+```
+Referencing initializer 'init(_:content:)' on 'ForEach' requires that 'Habit' conform to 'Identifiable'
+```
+
+We need that `Habits`, `Habit` conform to `RealmSwift.ObjectKeyIdentifiable`, so we can use them easily with `ForEach`
+
+```swift title='/Model/Habit.swift'
+class Habit: Object, ObjectKeyIdentifiable {
+```
+
+```swift title='/Model/Habits.swift'
+class Habits: Object, ObjectKeyIdentifiable {
+```
+
+## The Preview
+
+Is empty! That's because we're passing an empty `Habits()` object that has no `Habit` inside. Let's fix this adding some data to our Realm.
+
+![](/img/5-add-list-habits-view/empty-preview.png)
+

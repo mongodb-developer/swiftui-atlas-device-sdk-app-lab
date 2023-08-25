@@ -1,0 +1,64 @@
+# Bypassing the Migration
+
+## Simplest way to bypass the Migration
+
+We can drop the database each time we make a change in the schema using `deleteRealmIfMigrationNeeded`. This is a quick way to bypass the migration while in development but we should __never ship an app using this__.
+
+## Add the RealmSwift import
+
+```swift title='GoodHabitsRealmAppApp.swift' 
+import RealmSwift
+```
+
+This will create a problem, as both SwiftUI and RealmSwift have an `App` type. To fix this, we'll add `SwiftUI` to our app like:
+
+```swift title='GoodHabitsRealmAppApp.swift' 
+struct GoodHabitsRealmAppApp: SwiftUI.App {
+```
+
+## Get default config and set `deleteRealmIfMigrationNeeded`
+
+Here we just change the config for `DEBUG` builds. This way we avoid shipping this code.
+
+```swift title='GoodHabitsRealmAppApp.swift'
+// ...
+struct GoodHabitsRealmAppApp: SwiftUI.App {
+    var config = Realm.Configuration.defaultConfiguration
+
+    init() {
+        #if DEBUG
+        config.deleteRealmIfMigrationNeeded = true
+        #endif
+    }
+
+    // ...
+}
+```
+
+
+## Complete listing
+
+Our new `GoodHabitsRealmAppApp` look like this. Now we can change our schema without getting errors, but we'll lose any changes in the database.
+
+```swift title='GoodHabitsRealmAppApp.swift'
+import SwiftUI
+import RealmSwift
+
+@main
+struct GoodHabitsRealmAppApp: SwiftUI.App {
+    var config = Realm.Configuration.defaultConfiguration
+
+    init() {
+        #if DEBUG
+        config.deleteRealmIfMigrationNeeded = true
+        #endif
+    }
+
+    var body: some Scene {
+        WindowGroup {
+            MainView()
+                .environment(\.realmConfiguration, config)
+        }
+    }
+}
+```

@@ -1,0 +1,57 @@
+# Adding and Editing Habits
+
+## Adding or Editing?
+
+We want to use this view for adding a new Habit or to edit an existing one. If we're adding, the injected `habit` will be blank. If editing, it'll contain data. To distinguish between these two modes we'll use a simple boolean variable `isAddingNewHabit`. 
+
+If we're adding a new Habit, we change the title to "New Habit" and a new "Save" button will add this new Habit to the list of `habits`
+
+```swift title='/UI/HabitDetailView.swift'
+struct HabitDetailView: View {
+    @ObservedRealmObject var habit: Habit
+    @ObservedRealmObject var habits: Habits
+    @Binding var isAddingNewHabit: Bool
+
+    var body: some View {
+        VStack {
+            if isAddingNewHabit {
+                Text("New Habit")
+                    .font(.largeTitle)
+            } else {
+                Text(habit.name)
+                    .font(.largeTitle)
+            }
+            
+            List {
+                Section {
+                    TextField("Name", text: $habit.name, prompt: Text("Enter habit name"))
+                    TextField("Description", text: $habit.desc, prompt: Text("Enter habit description"))
+                }
+            }
+
+            if isAddingNewHabit {
+                Button("Save") {
+                    $habits.habits.append(habit)
+                    isAddingNewHabit = false
+                }.padding()
+            }
+        }
+    }
+}
+```
+
+We've deleted the `.navigationTitle("New Habit")` as now we're using the `largeTitle` `Text` to show if we're editing or adding.
+
+## Fixing the Preview (again)
+
+As we just added a new parameter to our view, we need to pass it to the Preview
+
+```swift title='/UI/HabitDetailView.swift'
+        return HabitDetailView(habit: Habit(name: "Exercise", desc: "Good for you!"),
+                               habits: realm.objects(Habits.self).first!,
+                               isAddingNewHabit: .constant(true))
+```
+
+We can change `isAddingNewHabit` in the preview to false and see how our screen looks while editing 
+
+![](/img/9-habit-detail-view/new-habit.png)

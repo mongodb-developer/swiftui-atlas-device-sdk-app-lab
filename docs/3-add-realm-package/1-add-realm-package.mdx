@@ -1,0 +1,17 @@
+---
+sidebar_position: 3
+---
+
+# Add the RealmSwift package
+
+We'll use Realm as our Database, to store data locally on the phone. We can [add the Realm SDK as a external dependency using various methods in iOS](https://www.mongodb.com/docs/realm/sdk/swift/install/#installation). Here, we'll use Apple's Swift Package Manager. 
+
+- [1] click on your Project file (blue file at the top)
+- [2] click on the project info icon just above TARGETS
+- [3] open the Package Dependencies tab
+- [4] click on the + button
+- add https://github.com/realm/realm-swift.git
+- select Realm Swift
+- select a Simulator and build the app (the 1st time you build the Realm SDK takes some time, then it's cached so you don't need to)
+
+![](/img/3-add-realm-package/add-realm.png)

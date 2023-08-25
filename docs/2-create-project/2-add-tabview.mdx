@@ -1,0 +1,23 @@
+# Add a TabView
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+- replace the content in `MainView` with a `TabView` with two tabs, __Today__ and __Config__. These two tabs will for now show a `Text` when selected.
+
+```swift title="MainView.swift"
+TabView {
+    Text("Today")
+        .tabItem {
+            Text("Today")
+        }
+    
+    Text("Config")
+        .tabItem {
+            Text("Config")
+        }
+}
+```
+
+- we should see the working tabs in the preview
+
+[![](/img/2-create-project/tabbar-added.png)](/img/2-create-project/tabbar-added.png)

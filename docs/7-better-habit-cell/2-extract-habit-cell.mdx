@@ -1,0 +1,29 @@
+# Extract the HabitCellView
+
+- We'll extract all the Cell code, and put it in a different View
+
+```swift title='ConfigView.swift'
+struct HabitCellView: View {
+    @ObservedRealmObject var habit: Habit
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("\(habit.name)")
+                .font(.title)
+            Text("\(habit.desc)")
+        }.padding()
+    }
+}
+```
+
+We're injecting here the Habit we need to display.
+
+- we use this in the `List`:
+
+```swift title='ConfigView.swift'
+List {
+    ForEach(habits.habits) { habit in
+        HabitCellView(habit: habit)
+    }
+}
+```

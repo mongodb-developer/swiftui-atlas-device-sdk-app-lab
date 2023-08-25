@@ -1,0 +1,56 @@
+# Passing an initial List of Habits
+
+Right now, in `MainView` we're passing an empty `Habits` variable to `ConfigView`. We need to create and insert one Habits in the Realm so the information we add in our `HabitDetailView` is persisted.
+
+## Adding all Habits to MainView
+
+We'll add a query that will read all `Habits` from the Database. When we start the app for the first time, there's nothing in there. We also need to `import RealmSwift`.
+
+```swift title='/Views/MainView.swift'
+    @ObservedResults(Habits.self) var allHabitGroups
+```
+
+## ProgressView or Tab
+
+If we still don't have anything in our Database, we'll present a ProgressView. If we have something, we'll show the `TabView`.
+
+- in `MainView` we can then pass an initial list of habits
+
+```swift title='/Views/MainView.swift'
+var body: some View {
+    // we need at least a Habits group to start adding habits
+    if let habits = allHabitGroups.first {
+        TabView {
+            TodayView()
+                .tabItem {
+                    Image(systemName: "calendar")
+                    Text("Today")
+                }
+            ConfigView(habits: habits)
+                .tabItem {
+                    Image(systemName: "wrench.and.screwdriver")
+                    Text("Config")
+                }
+        }
+    } else {
+        ProgressView()
+    }
+}
+```
+
+## Adding a new Habits at startup
+
+To have an instance of `Habits`, we'll add it when our `ProgressView` if shown.
+
+```swift title='/Views/MainView.swift'
+// if no Habits group, we add one
+ProgressView()
+    .onAppear {
+        $allHabitGroups.append(Habits())
+    }
+```
+
+## Testing on Sim
+
+- we can now run the app, add, delete, edit and reorder habits!
+- we can even use SimPholders and open the DB with MongoDB Realm Studio!

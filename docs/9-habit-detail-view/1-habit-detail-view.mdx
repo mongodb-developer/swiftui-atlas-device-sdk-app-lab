@@ -1,0 +1,66 @@
+# Create the HabitDetailView
+
+This View is used for adding or editing a new Habit
+
+## Creating the file
+
+- we'll create a new SwiftUI View named `HabitDetailView.swift` in the `UI` group 
+
+```swift title='/UI/HabitDetailView.swift'
+import SwiftUI
+
+struct HabitDetailView: View {
+    var body: some View {
+        Text("Hello, World!")
+    }
+}
+
+struct HabitDetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        HabitDetailView()
+    }
+}
+```
+## Injecting Habit and Habits
+
+-  we want to create new habits and to add these new habits to the existing list of habits, so we'll inject two parameters in our view, and add the `import RealmSwift` at the beginning.
+
+```swift title='/UI/HabitDetailView.swift'
+import RealmSwift
+
+struct HabitDetailView: View {
+
+    @ObservedRealmObject var habit: Habit = Habit()
+    @ObservedRealmObject var habits: Habits
+    // ...
+}
+```
+
+## Fixing the preview
+
+As now we're injecting two parameters in our view, we need to pass these to the Preview:
+
+```swift title='/UI/HabitDetailView.swift'
+struct HabitDetailView_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        let realm =  realmWithData()
+        
+        return HabitDetailView(habit: Habit(name: "Exercise", desc: "Good for you!"), 
+                               habits: realm.objects(Habits.self).first!)
+    }
+}
+```
+
+## A simple layout
+
+We'll use a couple TextFields that will show any existing data (if the injected `Habit` has it) and they'll allow us to edit those fields.
+
+```swift title='/UI/HabitDetailView.swift'
+List {
+    Section {
+        TextField("Name", text: $habit.name, prompt: Text("Enter habit name"))
+        TextField("Description", text: $habit.desc, prompt: Text("Enter habit description"))
+    }   
+}.navigationTitle("New Habit")
+```

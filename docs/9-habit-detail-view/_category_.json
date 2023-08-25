@@ -1,0 +1,8 @@
+{
+    "label": "Habit Detail View",
+    "position": 9,
+    "link": {
+        "type": "generated-index",
+        "description": "In this section, we'll build a new View to create and edit Habits."
+    }
+}

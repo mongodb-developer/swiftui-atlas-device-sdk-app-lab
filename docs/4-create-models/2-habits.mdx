@@ -1,0 +1,22 @@
+# Habits model class
+
+
+- create an `Habits` class, a list of Habits. Here we use a `RealmSwift` List. As there's also now a `SwiftUI`List, we need to add the namespace `RealmSwift.List`
+
+
+```swift title='/Model/Habits.swift'
+import RealmSwift
+
+class Habits: Object {
+    @Persisted(primaryKey: true) var _id: ObjectId
+
+    @Persisted var habits = RealmSwift.List<Habit>()
+}
+```
+
+- if we want to reference from one habit to the list of habits, we'll a `group` propery to our `Habit` class:
+
+```swift title='/Model/Habit.swift'
+    // backlink
+    @Persisted(originProperty: "habits") var group: LinkingObjects<Habits>
+```

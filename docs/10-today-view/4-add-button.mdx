@@ -1,0 +1,34 @@
+# Add Day Button
+
+## Button
+
+We'll add a button to create a new Day. For that, we'll add to the `List` a `toolbar`
+
+```swift title='/UI/DaysView.swift'
+List {
+    // ...
+}
+// ...
+.toolbar {
+    ToolbarItem(placement: .bottomBar) {
+        Button(action: {
+            let day = Day.createDayWithHabitsInRealm(realm: realm)
+            
+            try? realm.write({
+                $days.append(day)
+            })
+        }) {
+            Image(systemName: "plus.circle.fill")
+                .resizable()
+                .frame(width: 50.0, height: 50.0)
+        }.frame(maxWidth: .infinity, alignment: .trailing)
+    }
+}
+```
+
+To add a new object to our Database we use a Realm transaction `realm.write`, so we need to access our Realm in this class, so let's add a property:
+
+
+```swift title='/UI/DaysView.swift'
+    @Environment(\.realm) var realm
+```

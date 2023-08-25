@@ -1,0 +1,24 @@
+# Tab Bar icons
+
+- to improve the tabs, we can add some icons. We'll select those icons from the [SF Symbols font](https://developer.apple.com/design/human-interface-guidelines/sf-symbols/)
+
+```swift title="MainView.swift"
+TabView {
+    Text("Today")
+        .tabItem {
+            Image(systemName: "calendar")
+            Text("Today")
+        }
+    Text("Config")
+        .tabItem {
+            Image(systemName: "wrench.and.screwdriver")
+            Text("Config")
+        }
+}
+```
+
+- To find the icons and their identifiers, you can install the [SF Symbols App](https://developer.apple.com/sf-symbols/) that contains thousands of icons we can use directly in our apps.
+
+[![](/img/2-create-project/sf-symbols-app.png)](/img/2-create-project/sf-symbols-app.png)
+
+- There are more SF icons out there, like these [Logos as SF Symbols collection of social media icons](https://github.com/jeremieb/social-symbols)

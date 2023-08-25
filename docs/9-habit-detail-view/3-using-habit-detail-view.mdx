@@ -1,0 +1,58 @@
+# Using HabitDetailView
+
+We want to navigate from the list of habits to add a new Habit or to edit an existing one. For that we'll use `HabitDetailView` from `ConfigView`.
+
+## Add a @State variable
+
+To control if we're adding or editing, we'll use a `@State` var
+
+```swift title='/UI/ConfigView.swift'
+    @State private var isShowingSheet = false
+```
+
+## Add a NavigationLink
+
+We add a Navigation Link on each Cell so when we click on that `HabitCellView` cell we navigate to `HabitDetailView`
+
+```swift title='/UI/ConfigView.swift'
+    List {
+        ForEach(habits.habits) { habit in
+            NavigationLink(destination: HabitDetailView(habit: habit, 
+                                                        habits: habits,
+                                                        isAddingNewHabit: $isShowingSheet)) {
+                HabitCellView(habit: habit)
+            }
+        }
+        // ...
+    }
+    .scrollContentBackground(.hidden)
+```
+
+## Add button that shows a Sheet
+
+```swift title='/UI/ConfigView.swift'
+NavigationStack {
+    List {
+        // hidden for clarity
+    }
+    .scrollContentBackground(.hidden)
+    .navigationTitle("Habits")
+    .navigationBarItems(trailing: EditButton())
+    // new code here 👇
+    .toolbar {
+        ToolbarItem(placement: .bottomBar) {
+            Button(action: {
+                isShowingSheet.toggle()
+            }) {
+                Image(systemName: "plus.circle.fill")
+                    .resizable()
+                    .frame(width: 50.0, height: 50.0)
+            }
+        }
+    }
+    .sheet(isPresented: $isShowingSheet) {
+        HabitDetailView(isAddingNewHabit: $isShowingSheet, habits: habits)
+    }
+    // new code here 👆
+}
+```

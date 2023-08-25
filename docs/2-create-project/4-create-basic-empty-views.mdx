@@ -1,0 +1,45 @@
+# Create basic Empty Views
+
+- create a `UI` group (a folder) to organize our code. Rigth click on `GoodHabitsRealmApp` in the file navigator and select `New Group` 
+- move `MainView` there
+    - if Xcode freaks out, comment and uncomment the preview
+- create `TodayView` (File > New > File or ⌘ + N, select SwiftUI View)
+  - leave it empty, just a `Text` with "Today"
+- create empty `ConfigView`
+  - leave it empty, just a `Text` with "Config"   
+
+```swift title='TodayView.swift (ConfigView.swift is quite similar)'
+import SwiftUI
+
+struct TodayView: View {
+    var body: some View {
+        Text("Today")
+    }
+}
+
+struct TodayView_Previews: PreviewProvider {
+    static var previews: some View {
+        TodayView()
+    }
+}
+```
+
+[![Folder structure](/img/2-create-project/folders.png)](/img/2-create-project/folders.png)
+ 
+- let's use both in MainView's tabs
+
+```swift title='MainView.swift'
+TabView {
+    TodayView()
+        .tabItem {
+            Image(systemName: "calendar")
+            Text("Today")
+        }
+    
+    ConfigView()
+        .tabItem {
+            Image(systemName: "wrench.and.screwdriver")
+            Text("Config")
+        }
+}
+```

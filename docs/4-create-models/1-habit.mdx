@@ -1,0 +1,52 @@
+# Habit model class
+
+This represents one Habit, like Walking, Journaling, Meditating, etc.
+
+- create a `Model` group (right click in the file navigator and select `New Group`)
+- create a `Habit` model class
+    - extend from `Object`
+    - add `name` and `desc` properties (as `String`) and `done` as `Bool`
+
+```swift title='/Model/Habit.swift'
+import RealmSwift
+
+class Habit: Object {
+    @Persisted(primaryKey: true) var _id: ObjectId
+    
+    @Persisted var name = ""
+    @Persisted var desc = ""
+    @Persisted var done = false
+}
+```
+
+- let's add a `convenience` init
+
+```swift title='/Model/Habit.swift'
+convenience init(name: String = "", desc: String = "", done: Bool = false) {
+    self.init()
+    self.name = name
+    self.desc = desc
+    self.done = done
+}
+```
+
+## Complete listing
+
+```swift title='/Model/Habit.swift'
+import RealmSwift
+
+class Habit: Object {
+    @Persisted(primaryKey: true) var _id: ObjectId
+
+    @Persisted var name = ""
+    @Persisted var desc = ""
+    @Persisted var done = false
+
+    convenience init(name: String, desc: String, done: Bool) {
+        self.init()
+        self.name = name
+        self.desc = desc
+        self.done = done
+    }
+}
+```

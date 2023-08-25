@@ -1,0 +1,36 @@
+# Better Habit Cell
+
+## More info
+
+Now, let's add some more info to that Habit cell
+
+```swift title='ConfigView.swift'
+VStack(alignment: .leading) {
+    Text("\(habit.name)")
+        .font(.title)
+    Text("\(habit.desc)")
+}.padding()
+```
+
+## Navigation
+
+We'll put this list inside a `NavigationStack`, so we can navigate to one Habit. Also, we'll add a title to the `List`
+
+```swift title='ConfigView.swift'
+NavigationStack {
+    List {
+        ForEach(habits.habits) { habit in
+           VStack(alignment: .leading) {
+                Text("\(habit.name)")
+                    .font(.title)
+                Text("\(habit.desc)")
+            }.padding() 
+        }
+    }
+    .navigationTitle("Habits")
+}
+```
+
+## Preview
+
+![](/img/7-better-habit-cell/1-better-habit-cell.png)

@@ -1,0 +1,28 @@
+# DayCellView
+
+## DayCellView
+
+We'll add a cell to show the information for each day.
+
+```swift title='/UI/DaysView.swift'
+struct DayCellView: View {
+    @ObservedRealmObject var day: Day
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("\(day.date.formatted(date: .abbreviated, time: .omitted))")
+                .font(.title)
+        }.padding()
+    }
+}
+```
+
+And we'll use it
+
+```swift title='/UI/DaysView.swift'
+ForEach(days) { day in
+    NavigationLink(destination: Text("TO DO")) {
+        DayCellView(day: day)
+    }
+}
+```

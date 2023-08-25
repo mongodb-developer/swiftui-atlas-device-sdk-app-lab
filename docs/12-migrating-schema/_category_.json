@@ -1,0 +1,8 @@
+{
+    "label": "Migrating the Schema",
+    "position": 11,
+    "link": {
+        "type": "generated-index",
+        "description": "In this section, you'll learn how to Migrate the Realm schema in case you add/delete fields to your models."
+    }
+}

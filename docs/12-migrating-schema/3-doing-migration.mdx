@@ -1,0 +1,33 @@
+# Migrating the Realm Schema
+
+If we want to do a simple migration, we just need to increment the version number of the schema. This way, Realm will perform an automatic migration (if possible) and we won't lose any data. So each time we alter our schema we'll need to also increment the schema's version number.
+
+```swift title='GoodHabitsRealmAppApp.swift'
+// ...
+    init() {
+        conf.schemaVersion = 2
+    }
+// ...
+```
+## Complete listing
+
+```swift title='GoodHabitsRealmAppApp.swift'
+import SwiftUI
+import RealmSwift
+
+@main
+struct GoodHabitsRealmAppApp: SwiftUI.App {
+    var config = Realm.Configuration.defaultConfiguration
+
+    init() {
+        config.schemaVersion = 2
+    }
+
+    var body: some Scene {
+        WindowGroup {
+            MainView()
+                .environment(\.realmConfiguration, config)
+        }
+    }
+}
+```

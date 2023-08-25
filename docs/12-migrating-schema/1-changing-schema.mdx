@@ -1,0 +1,46 @@
+
+# Changing the Schema
+
+## Adding a new field
+
+We'll add a new field to our `Days` and `Habits` classes. This will be the user that created this piece of data (although right now as this is a local Realm Database we don't have any users around, but you can check the next workshop that uses Atlas Device Sync to store this data in MongoDB Atlas)
+
+
+```swift title='/Model/Habits.swift'
+import RealmSwift
+
+class Habits: Object {
+    @Persisted(primaryKey: true) var _id: ObjectId
+
+    @Persisted var habits = RealmSwift.List<Habit>()
+
+    // user that created this list of Habits
+    @Persisted var ownerId = ""
+}
+```
+
+
+```swift title='/Model/Days.swift'
+import Foundation
+import RealmSwift
+
+class Days: Object, ObjectKeyIdentifiable {
+    @Persisted(primaryKey: true) var _id: ObjectId
+
+    @Persisted var days = RealmSwift.List<Day>()
+
+    // user that created this list of Habits
+    @Persisted var ownerId = ""
+}
+```
+
+## Errors at runtime
+
+If we run our app now, we'll see it crashing on startup. Reading the error logs we see:
+
+```
+Error Domain=io.realm Code=10 "Migration is required due to the following errors:
+```
+
+This means that Realm stopped the app because we made one change to the schema of our classes, but we haven't told Realm what to do with the data that already exist in the database. We're adding a new field, should Realm add that field to all existing objects in the database? Has this been an error?
+

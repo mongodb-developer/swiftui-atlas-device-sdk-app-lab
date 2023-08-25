@@ -1,0 +1,53 @@
+# Days View
+
+## Renaming TodayView
+
+As we'll showing not only today, but all our days we'll call this DaysView
+
+## Creating our Days view
+
+Our DaysView will show all the days where we've been tracking our habits. For each day, a new row will be added.
+
+We'll start with a quite simple SwiftUI view with just an empty `NavigationStack`. We query all `Day` instances in our Database to show them.
+
+```swift title='/UI/DaysView.swift'
+import SwiftUI
+import RealmSwift
+
+// This shows all days, we can click on a day to navigate and check habits or add
+// a new day
+struct DaysView: View {
+    @ObservedResults(Day.self) var days
+    
+    var body: some View {
+        NavigationStack {
+        }
+    }
+}
+```
+
+## Showing all days
+
+To show all days, we'll use a `ForEach`
+
+```swift title='/UI/DaysView.swift'
+struct DaysView: View {
+    @ObservedResults(Day.self) var days
+
+    var body: some View {
+        NavigationStack {
+            // new code here 👇
+            List {
+                ForEach(days) { day in
+                    Text("\(day.date)")
+                }
+                .onDelete(perform: $days.remove)
+            }
+            .scrollContentBackground(.hidden)
+            .navigationTitle("All Days")
+            .navigationBarItems(trailing: EditButton())
+            // new code here 👆
+        }
+    }
+}
+```
