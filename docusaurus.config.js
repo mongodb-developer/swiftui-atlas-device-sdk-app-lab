@@ -4,7 +4,7 @@
 // Change here to customise config
 
 // Name of the Github Repo
-const workshopName = 'swiftui-realm-app-workshop';
+const workshopName = "swiftui-atlas-device-sdk-app-lab";
 
 // Main page config
 const title = "SwiftUI Realm App Workshop";
