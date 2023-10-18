@@ -7,8 +7,8 @@
 const workshopName = "swiftui-atlas-device-sdk-app-lab";
 
 // Main page config
-const title = "SwiftUI Realm App Workshop";
-const tagLine = "Learn how to build an iOS app using SwiftUI and Realm for local persistence";
+const title = "SwiftUI Atlas Device SDK App Workshop";
+const tagLine = "Learn how to build an iOS app using SwiftUI and the Atlas Device SDK (formerly Realm) for local persistence";
 const startButtonTitle = "Get Started 📲";
 
 // Main Page Features
@@ -21,10 +21,10 @@ const featureList = [
     `,
   },
   {
-    title: 'Local Persistance using Realm',
+    title: 'Local Persistance using the Atlas Device SDK for iOS',
     illustration: 'img/Technical_SOFTWARE_SearchDocuments_Spot_BS_SpringGreen.png',
     description: `
-        We'll store our data locally using the Free and Open Source Realm Swift SDK
+        We'll store our data locally using the Free and Open Source Atlas Device SDK (Realm) Swift SDK
     `,
   },
   {
@@ -39,7 +39,7 @@ const featureList = [
 // UTM stuff
 
 const utmAdvocateName = `diego.freniche`;
-const utmWorkshopName = 'ios_swiftui_realm_workshop'
+const utmWorkshopName = 'ios_swiftui_atlas_device_sdk_lab'
 
 const utmParams = `utm_campaign=devrel&utm_source=workshop&utm_medium=cta&utm_content=${utmWorkshopName}&utm_term=${utmAdvocateName}`;
 
@@ -126,6 +126,7 @@ const config = {
         },
       },
       navbar: {
+        title: `${title}`,
         logo: {
           alt: "MongoDB Logo",
           src: "img/logo.svg",

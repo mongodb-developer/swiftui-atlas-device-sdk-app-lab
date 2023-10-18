@@ -2,7 +2,7 @@
 
 ## Environment .realm  
 
-Realm defines several [environment](https://developer.apple.com/documentation/swiftui/environment) variables in SwiftUI, we've already used one in this preview:
+Atlas Device SDK defines several [environment](https://developer.apple.com/documentation/swiftui/environment) variables in SwiftUI, we've already used one in this preview:
 
 To use this data we change the preview in `ConfigView.swift`. We can call `realmWithData` as it's a `static` member of `PreviewProvider` now.
 
@@ -16,7 +16,7 @@ struct ConfigView_Previews: PreviewProvider {
 }
 ```
 
-The default Realm is created by the Realm SDK and we can access it using the path `\.realm`, but we can inject a new realm to other views down our hierarchy using:
+The default Realm is created by the Atlas Device SDK and we can access it using the path `\.realm`, but we can inject a new realm to other views down our hierarchy using:
 
 ```swift
 .environment(\.realm, realm)

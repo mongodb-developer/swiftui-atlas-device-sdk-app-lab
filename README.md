@@ -1,6 +1,6 @@
-# Build a SwiftUI App that stores data locally using the Realm SDK
+# Build a SwiftUI App that stores data locally using the Atlas Device SDK
 
-In this hands-on lab you will build, starting from scratch, a SwiftUI iOS app that stores data using the Realm SDK locally (not syncing to MongoDB).
+In this hands-on lab you will build, starting from scratch, a SwiftUI iOS app that stores data using the Atlas Device SDK (Realm) locally (not syncing to MongoDB).
 
 🚀 Try it [here](https://mongodb-developer.github.io/swiftui-atlas-device-sdk-app-lab/)
 
