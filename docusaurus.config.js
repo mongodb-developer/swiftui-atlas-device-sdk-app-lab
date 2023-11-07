@@ -7,7 +7,7 @@
 const workshopName = "swiftui-atlas-device-sdk-app-lab";
 
 // Main page config
-const title = "SwiftUI Atlas Device SDK App Workshop";
+const title = "SwiftUI Atlas Device SDK App Lab";
 const tagLine = "Learn how to build an iOS app using SwiftUI and the Atlas Device SDK (formerly Realm) for local persistence";
 const startButtonTitle = "Get Started 📲";
 
